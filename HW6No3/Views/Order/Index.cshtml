@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HW6No3.Models.orders>
+﻿@model IPagedList<HW6No3.Models.orders>
+@using PagedList.Mvc;
+@using PagedList;
 <h2>Orders</h2>
 @using (Html.BeginForm("Index", "Order", FormMethod.Post))
 {
@@ -7,10 +9,10 @@
 
 }
 @using (Html.BeginForm("Index", "Order", FormMethod.Get))
-    {
-<input type="submit" name="submit" value="clear search" />
+{
+    <input type="submit" name="submit" value="clear search" />
 
-    }
+}
 
 <br />
 @foreach (var item in Model)
@@ -64,10 +66,11 @@
                 <td>@GrandTotal</td>
             </tr>
         </tfoot>
-        
+
     </table>
 
 }
+@Html.PagedListPager(Model, i => Url.Action("Index", "Order", new { i, search = Request.QueryString["search"] }))
 <style>
     #total {
         text-align: right;
