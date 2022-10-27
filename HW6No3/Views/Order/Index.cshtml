@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HW6No3.Models.orders>
+
+@foreach (var item in Model)
+{
+    <h2>@Html.DisplayFor(modelItem => item.order_id)</h2>
+    <h2>@Html.DisplayFor(modelItem => item.order_date)</h2>
+
+    <table class="table">
+
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                List Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+        @{
+            decimal GrandTotal = 0;
+
+        }
+        @foreach (var var in item.order_items)
+        {
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => var.products.product_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => var.list_price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => var.quantity)
+                </td>
+                <td>
+                    @(var.list_price * var.quantity)
+                </td>
+            </tr>
+            GrandTotal += (var.list_price * var.quantity);
+
+        }
+        @GrandTotal;
+    </table>
+
+}
+
