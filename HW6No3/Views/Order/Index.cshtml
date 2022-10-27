@@ -1,9 +1,21 @@
 ﻿@model IEnumerable<HW6No3.Models.orders>
+<h2>Orders</h2>
+@using (Html.BeginForm("Index", "Order", FormMethod.Post))
+{
+    <input type="date" name="date" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31">
+    <input type="submit" name="submit" value="search" />
 
+}
+@using (Html.BeginForm("Index", "Order", FormMethod.Get))
+    {
+<input type="submit" name="submit" value="clear search" />
+
+    }
+
+<br />
 @foreach (var item in Model)
 {
-    <h2>@Html.DisplayFor(modelItem => item.order_id)</h2>
-    <h2>@Html.DisplayFor(modelItem => item.order_date)</h2>
+    <h2>Order:@Html.DisplayFor(modelItem => item.order_id) - @Convert.ToDateTime(item.order_date).ToString("yyyy/MM/dd")</h2>
 
     <table class="table">
 
@@ -46,8 +58,27 @@
             GrandTotal += (var.list_price * var.quantity);
 
         }
-        @GrandTotal;
+        <tfoot>
+            <tr>
+                <th id="total" colspan="3">Grand Total :</th>
+                <td>@GrandTotal</td>
+            </tr>
+        </tfoot>
+        
     </table>
 
 }
+<style>
+    #total {
+        text-align: right;
+    }
 
+    #table {
+        border: 1px solid red;
+        border-collapse: separate;
+    }
+
+        #table th, #table td {
+            border: 1px solid #000;
+        }
+</style>
