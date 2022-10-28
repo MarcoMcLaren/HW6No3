@@ -57,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.categories.category_name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.product_id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.product_id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.product_id })
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">EDIT</button>
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">DELETE</button>
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">DETAILS</button>
             </td>
         </tr>
     }
@@ -67,3 +67,29 @@
 </table>
 
 @Html.PagedListPager(Model, i => Url.Action("Index", "products", new { i, search = Request.QueryString["search"] }))
+
+<!--MODAL POPUP-->
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
