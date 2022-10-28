@@ -11,14 +11,12 @@
 
 @using (Html.BeginForm("Index", "products", FormMethod.Post))
 {
-    <input type="text" name="search" placeholder="Enter Name" />
-    <input type="submit" name="submit" value="search" />
+    <input type="text" name="search" placeholder="Enter Name" id="text"/>
+    <input type="submit" name="submit" class="btn btn-warning btn-sm" value="SEARCH" /> 
+    <button type="button" id="createCompanyButton" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+    <table class="table">
     <tr>
         <th>
             Name
@@ -57,39 +55,107 @@
                 @Html.DisplayFor(modelItem => item.categories.category_name)
             </td>
             <td>
-                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">EDIT</button>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">DELETE</button>
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">DETAILS</button>
+                <button type="button" id="btnEdit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">EDIT</button>
+                <button type="button" id="btnDelete" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">DELETE</button>
+                <button type="button" id="btnDetails" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">DETAILS</button>
             </td>
         </tr>
-    }
-
+        } 
+    
 </table>
+    <div id="div1"></div>
+    @Html.PagedListPager(Model, i => Url.Action("Index", "products", new { i, search = Request.QueryString["search"] }))
 
-@Html.PagedListPager(Model, i => Url.Action("Index", "products", new { i, search = Request.QueryString["search"] }))
-
-<!--MODAL POPUP-->
-<div class="container">
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+<div class="modal fade" role="dialog" id="createCompanyFormModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Default Modal</h4>
             </div>
+            <div id="createCompanyFormModalbody" class="modal-body">
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
+        <!-- /.modal-content -->
     </div>
-
 </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            $(document).on('click', '#createCompanyButton', function () {
+
+                $.ajax({
+                    url: '/products/Add',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#createCompanyFormModalbody').html(data);
+                        $('#createCompanyFormModal').modal('show');
+                    },
+                    error: function () {
+                        alert("There is some problem in the service!")
+                    }
+                });
+            });
+
+
+            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            $(document).on('click', '#btnEdit', function () {
+
+                $.ajax({
+                    url: '/products/Edit',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#createCompanyFormModalbody').html(data);
+                        $('#createCompanyFormModal').modal('show');
+                    },
+                    error: function () {
+                        alert("There is some problem in the service!")
+                    }
+                });
+            });
+
+
+            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            $(document).on('click', '#btnDelete', function () {
+
+                $.ajax({
+                    url: '/products/Delete',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#createCompanyFormModalbody').html(data);
+                        $('#createCompanyFormModal').modal('show');
+                    },
+                    error: function () {
+                        alert("There is some problem in the service!")
+                    }
+                });
+            });
+
+
+            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            $(document).on('click', '#btnDetails', function () {
+
+                $.ajax({
+                    url: '/products/Details',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#createCompanyFormModalbody').html(data);
+                        $('#createCompanyFormModal').modal('show');
+                    },
+                    error: function () {
+                        alert("There is some problem in the service!")
+                    }
+                });
+            });
+        });
+    </script>
 

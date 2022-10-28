@@ -1,0 +1,185 @@
+ <!--MODAL POPUP-->
+    <!--<div class="container">-->
+        <!-- Modal -->
+        <!--<div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">-->
+
+                <!-- Modal content-->
+                <!--<div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div id="modalBody" class="modal-body">
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>-->            
+
+
+
+
+$("#DeleteButton").click(function () {
+                $("#div1").load("#myModal");
+            });
+
+
+            //$("document").on("click", "#DeleteButton", function () {
+            //    var ID = $(this).data('ID');
+            //    $.ajax({
+            //        data: { ID: ID },
+            //        contentType: 'application/html; charset=utf-8',
+            //        type: 'POST',
+            //        url: '/products/Delete',
+            //        dataType: 'html'
+            //    })
+            //        .success(function (result) {
+            //            $('#myModal').html(result);
+            //            $('#myModal').html(data);
+            //            $('#myModal').modal('show');
+            //        })
+            //        .error(function (xhr, status) {
+            //            alert(status);
+            //        })
+            //})    
+            
+//$("#DeleteButton").click(function () {
+            //    $("#div1").load("/products/Delete");
+            //});
+
+
+
+onclick="location.href='@Url.Action("Delete", "products" ,new {  id = item.product_id  })'"   
+
+data-ID="@item.product_id"
+
+
+ // GET: products/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            products products = db.products.Find(id);
+            if (products == null)
+            {
+                return HttpNotFound();
+            }
+            return View(products);
+        
+// GET: products/Create
+        public ActionResult Create()
+        {
+            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name");
+            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name");
+            return View();
+        }
+
+
+
+        // POST: products/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "product_id,product_name,brand_id,category_id,model_year,list_price")] products products)
+        {
+            if (ModelState.IsValid)
+            {
+                db.products.Add(products);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
+            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
+            return View(products);
+        }
+
+
+
+        // GET: products/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            products products = db.products.Find(id);
+            if (products == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
+            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
+            return View(products);
+        }
+
+
+
+        // POST: products/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "product_id,product_name,brand_id,category_id,model_year,list_price")] products products)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(products).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
+            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
+            return View(products);
+        }
+
+
+
+        // GET: products/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            products products = db.products.Find(id);
+            if (products == null)
+            {
+                return HttpNotFound();
+            }
+            return View(products);
+        }
+
+
+
+        // POST: products/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            products products = db.products.Find(id);
+            db.products.Remove(products);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }

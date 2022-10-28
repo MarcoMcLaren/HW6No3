@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using HW6No3.Models;
 using PagedList.Mvc;
 using PagedList;
+using System.Threading.Tasks;
 
 namespace HW6No3.Controllers
 {
@@ -30,132 +31,32 @@ namespace HW6No3.Controllers
             return View(products.Where(x => x.product_name.Contains(search)).ToList().ToPagedList(i ?? 1, 10)); ;
         }
 
-
-
-        // GET: products/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Add()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            products products = db.products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
+            return PartialView();
+        }
+
+        public ActionResult Edit()
+        {
+            return PartialView();
+        }
+
+        public ActionResult Delete()
+        { 
+            return PartialView();
+        }
+
+        public ActionResult Details()
+        {
+            return PartialView();
         }
 
 
 
-        // GET: products/Create
-        public ActionResult Create()
-        {
-            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name");
-            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name");
-            return View();
-        }
 
 
 
-        // POST: products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "product_id,product_name,brand_id,category_id,model_year,list_price")] products products)
-        {
-            if (ModelState.IsValid)
-            {
-                db.products.Add(products);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
-            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
-            return View(products);
-        }
 
 
-
-        // GET: products/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            products products = db.products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
-            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
-            return View(products);
-        }
-
-
-
-        // POST: products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "product_id,product_name,brand_id,category_id,model_year,list_price")] products products)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(products).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.brand_id = new SelectList(db.brands, "brand_id", "brand_name", products.brand_id);
-            ViewBag.category_id = new SelectList(db.categories, "category_id", "category_name", products.category_id);
-            return View(products);
-        }
-
-
-
-        // GET: products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            products products = db.products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
-        }
-
-
-
-        // POST: products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            products products = db.products.Find(id);
-            db.products.Remove(products);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
