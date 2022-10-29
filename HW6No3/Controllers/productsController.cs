@@ -28,7 +28,7 @@ namespace HW6No3.Controllers
         public ActionResult Index(string search, int? i)
         {
             var products = db.products.Include(p => p.brands).Include(p => p.categories);
-            return View(products.Where(x => x.product_name.Contains(search)).ToList().ToPagedList(i ?? 1, 10)); ;
+            return View(products.Where(x => x.product_name.Contains(search)).ToList().ToPagedList(i ?? 1, 10));
         }
 
         public ActionResult Add()
@@ -41,9 +41,11 @@ namespace HW6No3.Controllers
             return PartialView();
         }
 
-        public ActionResult Delete()
-        { 
-            return PartialView();
+        [HttpPost]
+        public ActionResult Delete(int customerId)
+        {
+            return PartialView("Delete", db.products.Where(x => x.product_id == customerId).ToList());
+
         }
 
         public ActionResult Details()

@@ -16,7 +16,7 @@
     <button type="button" id="createCompanyButton" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
 }
 
-    <table class="table">
+    <table class="table" id="CustomerGrid">
     <tr>
         <th>
             Name
@@ -55,8 +55,8 @@
                 @Html.DisplayFor(modelItem => item.categories.category_name)
             </td>
             <td>
-                <button type="button" id="btnEdit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">EDIT</button>
-                <button type="button" id="btnDelete" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">DELETE</button>
+                <button type="button" id="btnEdit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" >EDIT</button>
+                <button type="button" id="btnDelete" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" data-id="@item.product_id">DELETE</button>
                 <button type="button" id="btnDetails" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">DETAILS</button>
             </td>
         </tr>
@@ -79,8 +79,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <br />
             </div>
         </div>
         <!-- /.modal-content -->
@@ -90,7 +89,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n Add controller         
             $(document).on('click', '#createCompanyButton', function () {
 
                 $.ajax({
@@ -107,9 +106,9 @@
             });
 
 
-            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            //Hierdie gedeelte roep EDIT modal pop up, in die modal pop up stuur jy die request om te add na n EDIT controller         
             $(document).on('click', '#btnEdit', function () {
-
+               
                 $.ajax({
                     url: '/products/Edit',
                     type: 'GET',
@@ -124,24 +123,33 @@
             });
 
 
-            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
-            $(document).on('click', '#btnDelete', function () {
+            //Hierdie gedeelte roep DELETE modal pop up, in die modal pop up stuur jy die request om te add na n DELETE controller
 
-                $.ajax({
-                    url: '/products/Delete',
-                    type: 'GET',
-                    success: function (data) {
-                        $('#createCompanyFormModalbody').html(data);
-                        $('#createCompanyFormModal').modal('show');
-                    },
-                    error: function () {
-                        alert("There is some problem in the service!")
-                    }
+            $("#CustomerGrid #btnDelete").click(function () {
+                /*var customerId = $(this).closest("tr").find("td").eq(0).text();*/
+                var customerId = $(this).data('id');
+                console.log(customerId)
+                    $.ajax({
+                        type: "POST",
+                        url: '/products/Delete',
+                        data: '{customerId: "' + customerId + '" }' ,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "html",
+                        success: function (data) {
+                            $('#createCompanyFormModalbody').html(data);
+                            $('#createCompanyFormModal').modal('show');
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
                 });
-            });
+            
 
-
-            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n OfficialAdd controller         
+            //Hierdie gedeelte roep DETAILS modal pop up, in die modal pop up stuur jy die request om te add na n DETAILS controller         
             $(document).on('click', '#btnDetails', function () {
 
                 $.ajax({
