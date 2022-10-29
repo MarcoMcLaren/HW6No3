@@ -36,9 +36,10 @@ namespace HW6No3.Controllers
             return PartialView();
         }
 
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Edit(int customerId)
         {
-            return PartialView();
+            return PartialView("Edit", db.products.Where(x => x.product_id == customerId).ToList());
         }
 
         [HttpPost]
@@ -48,9 +49,10 @@ namespace HW6No3.Controllers
 
         }
 
-        public ActionResult Details()
+        [HttpPost]
+        public ActionResult Details(int customerId)
         {
-            return PartialView();
+            return PartialView("Details", db.products.Where(x => x.product_id == customerId).ToList());
         }
 
 
