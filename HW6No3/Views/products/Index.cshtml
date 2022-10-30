@@ -13,7 +13,7 @@
 {
     <input type="text" name="search" placeholder="Enter Name" id="text"/>
     <input type="submit" name="submit" class="btn btn-warning btn-sm" value="SEARCH" /> 
-    <button type="button" id="createCompanyButton" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
+    <button type="button" id="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
 }
 
     <table class="table" id="CustomerGrid">
@@ -90,13 +90,11 @@
         $(document).ready(function () {
 
             //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n Add controller         
-            $("#CustomerGrid #btnAdd").click(function () {
-                var customerId = $(this).data('id');
-                console.log(customerId)
+            $("#btnAdd").click(function () {
                 $.ajax({
                     type: "POST",
                     url: '/products/Add',
-                    data: '{customerId: "' + customerId + '" }',
+                  /*  data: '{customerId: "' + customerId + '" }',*/
                     contentType: "application/json; charset=utf-8",
                     dataType: "html",
                     success: function (data) {

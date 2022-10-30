@@ -1,4 +1,5 @@
-﻿<h2>ADD</h2>
+﻿
+<h2>ADD</h2>
 
 <input type="text" name="simplAttr" id="Name" class="form-control" placeholder="Product Name" required="" /><br />
 <input type="text" name="simplAttr" id="Year" class="form-control" placeholder="Year" required="" /><br />
@@ -41,24 +42,30 @@
 <script type="text/javascript">
 
     $(function () {
-        LoadData();
         $("#btnSave").click(function () {
             var extb = {};
             extb.Name = $("#Name").val();
-            extb.Name = $("#Year").val();
-            extb.Name = $("#Price").val();
-            extb.Name = $("#Brand").val();
-            extb.Name = $("#Category").val();
+            extb.Year = $("#Year").val();
+            extb.Price = $("#Price").val();
+            extb.Brand = $("#Brand").val();
+            extb.Category = $("#Category").val();
 
+            console.log(extb);
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("CreateExampleTable")',
+                url: "/products/AddProduct",
                 data: '{extb: ' + JSON.stringify(extb) + '}',
-                dataType: "json",
                 contentType: "application/json; charset=utf-8",
-                success: function () {
-                    LoadData();
+                dataType: "json",
+                success: function (r) {
+                    alert("Product successfully added: ");
                 },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
             });
             return false;
         });

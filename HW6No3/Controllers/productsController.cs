@@ -10,6 +10,8 @@ using HW6No3.Models;
 using PagedList.Mvc;
 using PagedList;
 using System.Threading.Tasks;
+//using SimpleAsynAjax.Models;
+using Newtonsoft.Json;
 
 namespace HW6No3.Controllers
 {
@@ -31,10 +33,14 @@ namespace HW6No3.Controllers
             return View(products.Where(x => x.product_name.Contains(search)).ToList().ToPagedList(i ?? 1, 10));
         }
 
+        /// <summary>
+        /// Display all the modals
+        /// </summary>
         public ActionResult Add()
         {
             return PartialView();
         }
+
 
         [HttpPost]
         public ActionResult Edit(int customerId)
@@ -55,12 +61,25 @@ namespace HW6No3.Controllers
             return PartialView("Details", db.products.Where(x => x.product_id == customerId).ToList());
         }
 
+/// <summary>
+/// Officially CRUD database
+/// </summary>
 
-
-
-
-
-
+        [HttpPost]
+        public ActionResult AddProduct(products extb)
+        {
+            try
+            {
+                db.products.Add(extb);
+                db.SaveChanges();
+                string message = "SUCCESS";
+                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
     }
 }
