@@ -10,29 +10,29 @@
 
 <label for="drop-down">Brand:</label>
 <select name="drop-down" id="Brand">
-    <option value="Electra">Electra</option>
-    <option value="Haro">Haro</option>
-    <option value="Heller">Heller</option>
-    <option value="Pure Cycles">Pure Cycles</option>
-    <option value="Ritchey">Ritchey</option>
-    <option value="Strider">Strider</option>
-    <option value="Sun Bicycles">Sun Bicycles</option>
-    <option value="Surly">Surly</option>
-    <option value="Trek">Trek</option>
+    <option value="1">Electra</option>
+    <option value="2">Haro</option>
+    <option value="3">Heller</option>
+    <option value="4">Pure Cycles</option>
+    <option value="5">Ritchey</option>
+    <option value="6">Strider</option>
+    <option value="7">Sun Bicycles</option>
+    <option value="8">Surly</option>
+    <option value="9">Trek</option>
 </select>
 <br />
 
 <label for="drop-down">Category:</label>
 <select name="drop-down" id="Category">
-    <option value="Children Bicycles">Children Bicycles</option>
-    <option value="Comfort Bicycles">Comfort Bicycles</option>
-    <option value="Cruisers Bicycles">Cruisers Bicycles</option>
-    <option value="Pure Cycles">Pure Cycles</option>
-    <option value="Cyclocross Bicycles">Cyclocross Bicycles</option>
-    <option value="Electric Bikes">Electric Bikes</option>
-    <option value="Sun Bicycles">Sun Bicycles</option>
-    <option value="Mountain Bikes">Mountain Bikes</option>
-    <option value="Road Bikes">Road Bikes</option>
+    <option value="1">Children Bicycles</option>
+    <option value="2">Comfort Bicycles</option>
+    <option value="3">Cruisers Bicycles</option>
+    <option value="4">Pure Cycles</option>
+    <option value="5">Cyclocross Bicycles</option>
+    <option value="6">Electric Bikes</option>
+    <option value="7">Sun Bicycles</option>
+    <option value="8">Mountain Bikes</option>
+    <option value="9">Road Bikes</option>
 </select>
 <br />
 
@@ -56,7 +56,7 @@
             //extb.Brand = $("#Brand").val();
             //extb.Category = $("#Category").val();
 
-            var request = { product_name: $("#Name").val(), model_year: $("#Year").val(), list_price: $("#Price").val(), brand_name: $("#Brand").val(), category_name: $("#Category").val()  };
+            var request = { product_name: $("#Name").val(), model_year: $("#Year").val(), list_price: $("#Price").val(), brand_id: $("#Brand").val(), category_id: $("#Category").val()  };
 
             console.log(request);
             $.ajax({
@@ -69,7 +69,7 @@
                     alert("Product successfully added: ");
                 },
                 failure: function (response) {
-                    alert(response.responseText);
+                    alert("an error occure");
                 },
                 error: function (response) {
                     alert(response.responseText);

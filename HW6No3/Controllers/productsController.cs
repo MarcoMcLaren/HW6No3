@@ -69,7 +69,6 @@ namespace HW6No3.Controllers
         public ActionResult AddProduct( products request)
         {
 
-
             db.products.Add(request);
             db.SaveChanges();
             return Json(request);
