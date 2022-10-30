@@ -73,17 +73,37 @@ namespace HW6No3.Controllers
             db.SaveChanges();
             return Json(request);
 
-            //try
-            //{
-            //    db.products.Add(request);
-            //    db.SaveChanges();
-            //    string message = "SUCCESS";
-            //    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
-            //}
-            //catch (Exception)
-            //{
-            //    return RedirectToAction("Index");
-            //}
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProduct(products _product)
+        {
+
+            using (BikeStoresEntities db = new BikeStoresEntities())
+            {
+                products products = (from c in db.products
+                                     where c.product_id == _product.product_id
+                                     select c).FirstOrDefault();
+                if (products != null)
+                {
+                    db.products.Remove(products);
+                    db.SaveChanges();
+                    return Json(products);
+                }
+            }
+
+            return new EmptyResult();
+
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(products customerId)
+        {
+
+            db.products.Remove(customerId);
+            db.SaveChanges();
+            return Json(customerId);
+
         }
 
     }

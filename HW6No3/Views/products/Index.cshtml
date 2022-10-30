@@ -74,7 +74,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Default Modal</h4>
+                <h4 class="modal-title">Homework 6</h4>
             </div>
             <div id="createCompanyFormModalbody" class="modal-body">
 
@@ -95,7 +95,7 @@
             $.ajax({
                 type: "POST",
                 url: '/products/Add',
-                /*  data: '{customerId: "' + customerId + '" }',*/
+                  data: '{customerId: "' + customerId + '" }',
                 contentType: "application/json; charset=utf-8",
                 dataType: "html",
                 success: function (data) {
