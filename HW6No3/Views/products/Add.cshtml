@@ -1,9 +1,12 @@
 ﻿
 <h2>ADD</h2>
 
-<input type="text" name="simplAttr" id="Name" class="form-control" placeholder="Product Name" required="" /><br />
-<input type="text" name="simplAttr" id="Year" class="form-control" placeholder="Year" required="" /><br />
-<input type="text" name="simplAttr" id="Price" class="form-control" placeholder="Price" required="" /><br />
+<input type="text" name="simplAttr" id="Name" class="form-control" placeholder="Product Name" required="" />
+<br />
+<input type="text" name="simplAttr" id="Year" class="form-control" placeholder="Year" required="" />
+<br />
+<input type="text" name="simplAttr" id="Price" class="form-control" placeholder="Price" required="" />
+<br />
 
 <label for="drop-down">Brand:</label>
 <select name="drop-down" id="Brand">
@@ -16,7 +19,8 @@
     <option value="Sun Bicycles">Sun Bicycles</option>
     <option value="Surly">Surly</option>
     <option value="Trek">Trek</option>
-</select><br />
+</select>
+<br />
 
 <label for="drop-down">Category:</label>
 <select name="drop-down" id="Category">
@@ -29,32 +33,36 @@
     <option value="Sun Bicycles">Sun Bicycles</option>
     <option value="Mountain Bikes">Mountain Bikes</option>
     <option value="Road Bikes">Road Bikes</option>
-</select><br />
+</select>
+<br />
 
 
 <div class="form-group col-md-6">
     <div style="float: right; display:inline-block;">
         <input class="btn btn-primary" name="submitButton" id="btnSave" value="Save" type="button">
     </div>
-</div><br />
-
+</div>
+<br />
+<script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 
 <script type="text/javascript">
 
     $(function () {
         $("#btnSave").click(function () {
-            var extb = {};
-            extb.Name = $("#Name").val();
-            extb.Year = $("#Year").val();
-            extb.Price = $("#Price").val();
-            extb.Brand = $("#Brand").val();
-            extb.Category = $("#Category").val();
+            //var extb = {};
+            //extb.Name = $("#Name").val();
+            //extb.Year = $("#Year").val();
+            //extb.Price = $("#Price").val();
+            //extb.Brand = $("#Brand").val();
+            //extb.Category = $("#Category").val();
 
-            console.log(extb);
+            var request = { product_name: $("#Name").val(), model_year: $("#Year").val(), list_price: $("#Price").val(), brand_name: $("#Brand").val(), category_name: $("#Category").val()  };
+
+            console.log(request);
             $.ajax({
                 type: "POST",
                 url: "/products/AddProduct",
-                data: '{extb: ' + JSON.stringify(extb) + '}',
+                data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
@@ -67,6 +75,7 @@
                     alert(response.responseText);
                 }
             });
+            console.log(request);
             return false;
         });
     });

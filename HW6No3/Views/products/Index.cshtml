@@ -11,12 +11,13 @@
 
 @using (Html.BeginForm("Index", "products", FormMethod.Post))
 {
-    <input type="text" name="search" placeholder="Enter Name" id="text"/>
-    <input type="submit" name="submit" class="btn btn-warning btn-sm" value="SEARCH" /> 
+    <input type="text" name="search" placeholder="Enter Name" id="text" />
+    <input type="submit" name="submit" class="btn btn-warning btn-sm" value="SEARCH" />
+
     <button type="button" id="btnAdd" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">ADD</button>
 }
 
-    <table class="table" id="CustomerGrid">
+<table class="table" id="CustomerGrid">
     <tr>
         <th>
             Name
@@ -55,16 +56,16 @@
                 @Html.DisplayFor(modelItem => item.categories.category_name)
             </td>
             <td>
-                <button type="button" id="btnEdit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal"  data-id="@item.product_id">EDIT</button>
+                <button type="button" id="btnEdit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal" data-id="@item.product_id">EDIT</button>
                 <button type="button" id="btnDelete" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal" data-id="@item.product_id">DELETE</button>
                 <button type="button" id="btnDetails" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" data-id="@item.product_id">DETAILS</button>
             </td>
         </tr>
-        } 
-    
+    }
+
 </table>
-    <div id="div1"></div>
-    @Html.PagedListPager(Model, i => Url.Action("Index", "products", new { i, search = Request.QueryString["search"] }))
+<div id="div1"></div>
+@Html.PagedListPager(Model, i => Url.Action("Index", "products", new { i, search = Request.QueryString["search"] }))
 
 <div class="modal fade" role="dialog" id="createCompanyFormModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -86,102 +87,102 @@
     </div>
 </div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
+<script type="text/javascript">
+    $(document).ready(function () {
 
-            //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n Add controller         
-            $("#btnAdd").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: '/products/Add',
-                  /*  data: '{customerId: "' + customerId + '" }',*/
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "html",
-                    success: function (data) {
-                        $('#createCompanyFormModalbody').html(data);
-                        $('#createCompanyFormModal').modal('show');
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            });
-
-
-            //Hierdie gedeelte roep EDIT modal pop up, in die modal pop up stuur jy die request om te add na n EDIT controller         
-            $("#CustomerGrid #btnEdit").click(function () {
-                var customerId = $(this).data('id');
-                console.log(customerId)
-                $.ajax({
-                    type: "POST",
-                    url: '/products/Edit',
-                    data: '{customerId: "' + customerId + '" }',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "html",
-                    success: function (data) {
-                        $('#createCompanyFormModalbody').html(data);
-                        $('#createCompanyFormModal').modal('show');
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            });
-
-
-            //Hierdie gedeelte roep DELETE modal pop up, in die modal pop up stuur jy die request om te add na n DELETE controller
-
-            $("#CustomerGrid #btnDelete").click(function () {
-                var customerId = $(this).data('id');
-                console.log(customerId)
-                    $.ajax({
-                        type: "POST",
-                        url: '/products/Delete',
-                        data: '{customerId: "' + customerId + '" }' ,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "html",
-                        success: function (data) {
-                            $('#createCompanyFormModalbody').html(data);
-                            $('#createCompanyFormModal').modal('show');
-                        },
-                        failure: function (response) {
-                            alert(response.responseText);
-                        },
-                        error: function (response) {
-                            alert(response.responseText);
-                        }
-                    });
-                });
-            
-
-            //Hierdie gedeelte roep DETAILS modal pop up, in die modal pop up stuur jy die request om te add na n DETAILS controller         
-            $("#CustomerGrid #btnDetails").click(function () {
-                var customerId = $(this).data('id');
-                console.log(customerId)
-                $.ajax({
-                    type: "POST",
-                    url: '/products/Details',
-                    data: '{customerId: "' + customerId + '" }',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "html",
-                    success: function (data) {
-                        $('#createCompanyFormModalbody').html(data);
-                        $('#createCompanyFormModal').modal('show');
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    }
-                });
+        //Hierdie gedeelte roep ADD modal pop up, in die modal pop up stuur jy die request om te add na n Add controller
+        $("#btnAdd").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '/products/Add',
+                /*  data: '{customerId: "' + customerId + '" }',*/
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (data) {
+                    $('#createCompanyFormModalbody').html(data);
+                    $('#createCompanyFormModal').modal('show');
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
             });
         });
-    </script>
+
+
+        //Hierdie gedeelte roep EDIT modal pop up, in die modal pop up stuur jy die request om te add na n EDIT controller
+        $("#CustomerGrid #btnEdit").click(function () {
+            var customerId = $(this).data('id');
+            console.log(customerId)
+            $.ajax({
+                type: "POST",
+                url: '/products/Edit',
+                data: '{customerId: "' + customerId + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (data) {
+                    $('#createCompanyFormModalbody').html(data);
+                    $('#createCompanyFormModal').modal('show');
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+
+        //Hierdie gedeelte roep DELETE modal pop up, in die modal pop up stuur jy die request om te add na n DELETE controller
+
+        $("#CustomerGrid #btnDelete").click(function () {
+            var customerId = $(this).data('id');
+            console.log(customerId)
+            $.ajax({
+                type: "POST",
+                url: '/products/Delete',
+                data: '{customerId: "' + customerId + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (data) {
+                    $('#createCompanyFormModalbody').html(data);
+                    $('#createCompanyFormModal').modal('show');
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+
+        //Hierdie gedeelte roep DETAILS modal pop up, in die modal pop up stuur jy die request om te add na n DETAILS controller
+        $("#CustomerGrid #btnDetails").click(function () {
+            var customerId = $(this).data('id');
+            console.log(customerId)
+            $.ajax({
+                type: "POST",
+                url: '/products/Details',
+                data: '{customerId: "' + customerId + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (data) {
+                    $('#createCompanyFormModalbody').html(data);
+                    $('#createCompanyFormModal').modal('show');
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+    });
+</script>
 

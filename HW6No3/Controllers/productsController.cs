@@ -66,19 +66,25 @@ namespace HW6No3.Controllers
 /// </summary>
 
         [HttpPost]
-        public ActionResult AddProduct(products extb)
+        public ActionResult AddProduct( products request)
         {
-            try
-            {
-                db.products.Add(extb);
-                db.SaveChanges();
-                string message = "SUCCESS";
-                return Json(new { Message = message, JsonRequestBehavior.AllowGet });
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Index");
-            }
+
+
+            db.products.Add(request);
+            db.SaveChanges();
+            return Json(request);
+
+            //try
+            //{
+            //    db.products.Add(request);
+            //    db.SaveChanges();
+            //    string message = "SUCCESS";
+            //    return Json(new { Message = message, JsonRequestBehavior.AllowGet });
+            //}
+            //catch (Exception)
+            //{
+            //    return RedirectToAction("Index");
+            //}
         }
 
     }
